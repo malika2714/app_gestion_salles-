@@ -75,3 +75,4 @@ class ViewSalle(ctk.CTk):
         else:
             messagebox.showerror("Erreur", message)
 
+        self.btn_ajouter = ctk.CTkButton(self.cadreAction, text="Ajouter", command=self.ajouter_salle)
