@@ -29,10 +29,10 @@ class ViewSalle(ctk.CTk):
         self.entry_libelle.grid(row=1, column=1, padx=10, pady=10)
 
         self.label_type = ctk.CTkLabel(self.cadreInfo, text="Type")
-        self.label_typee.grid(row=2, column=0, padx=10, pady=10)
+        self.label_type.grid(row=2, column=0, padx=10, pady=10)
 
-        self.entry_typee = ctk.CTkEntry(self.cadreInfo)
-        self.entry_typee.grid(row=2, column=1, padx=10, pady=10)
+        self.entry_type = ctk.CTkEntry(self.cadreInfo)
+        self.entry_type.grid(row=2, column=1, padx=10, pady=10)
 
         self.label_capacite = ctk.CTkLabel(self.cadreInfo, text="Capacité")
         self.label_capacite.grid(row=3, column=0, padx=10, pady=10)
@@ -58,14 +58,14 @@ class ViewSalle(ctk.CTk):
     def vider_champs(self):
         self.entry_code.delete(0, "end")
         self.entry_libelle.delete(0, "end")
-        self.entry_typee.delete(0, "end")
+        self.entry_type.delete(0, "end")
         self.entry_capacite.delete(0, "end")
 
     def ajouter_salle(self):
         salle = Salle(
             self.entry_code.get(),
             self.entry_libelle.get(),
-            self.entry_typee.get(),
+            self.entry_type.get(),
             self.entry_capacite.get()
         )
 
