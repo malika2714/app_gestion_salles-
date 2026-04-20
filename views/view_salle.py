@@ -93,3 +93,13 @@ class ViewSalle(ctk.CTk):
                 messagebox.showerror("Erreur", message)
 
         self.btn_modifier = ctk.CTkButton(self.cadreAction, text="Modifier", command=self.modifier_salle)
+
+        def supprimer_salle(self):
+            code = self.entry_code.get()
+            succes, message = self.service_salle.supprimer_salle(code)
+
+            if succes:
+                messagebox.showinfo("Succès", message)
+                self.vider_champs()
+            else:
+                messagebox.showerror("Erreur", message)
