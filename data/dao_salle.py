@@ -1,7 +1,5 @@
 import json
 import mysql.connector
-from models.salle import Salle
-
 
 class DataSalle:
     def get_connection(self):
