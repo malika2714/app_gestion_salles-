@@ -1,4 +1,6 @@
 import customtkinter as ctk
+from tkinter import messagebox
+from models.salle import Salle
 from services.service_salle import ServiceSalle
 
 
@@ -55,5 +57,21 @@ class ViewSalle(ctk.CTk):
     def vider_champs(self):
         self.entry_code.delete(0, "end")
         self.entry_libelle.delete(0, "end")
-        self.entry_type.delete(0, "end")
+        self.entry_typee.delete(0, "end")
         self.entry_capacite.delete(0, "end")
+
+    def ajouter_salle(self):
+        salle = Salle(
+            self.entry_code.get(),
+            self.entry_libelle.get(),
+            self.entry_typee.get(),
+            self.entry_capacite.get()
+        )
+
+        succes, message = self.service_salle.ajouter_salle(salle)
+        if succes:
+            messagebox.showinfo("Succès", message)
+            self.vider_champs()
+        else:
+            messagebox.showerror("Erreur", message)
+
