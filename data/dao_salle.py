@@ -79,3 +79,25 @@ class DataSalle:
                 cursor.close()
                 connection.close()
 
+
+    def get_salle(self, code):
+        connection = self.get_connection()
+        if connection is None:
+            return None
+
+        try:
+            cursor = connection.cursor()
+            sql = "SELECT code, libelle, type, capacite FROM salle WHERE code=%s"
+            cursor.execute(sql, (code,))
+            row = cursor.fetchone()
+
+            if row:
+                return Salle(row[0], row[1], row[2], row[3])
+            return None
+        except Exception as e:
+            print("Erreur get_salle :", e)
+            return None
+        finally:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
