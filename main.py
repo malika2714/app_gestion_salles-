@@ -38,3 +38,8 @@ print(service.modifier_salle(salle1))
 print(service.supprimer_salle("S101"))
 
 print(service.rechercher_salle("S101"))
+
+liste = service.recuperer_salles()
+for s in liste:
+    print(s.afficher_infos())
+
