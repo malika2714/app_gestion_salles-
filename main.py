@@ -1,5 +1,6 @@
 from models.salle import Salle
 from data.dao_salle import DataSalle
+from services.service_salle import ServiceSalle
 
 dao = DataSalle()
 
@@ -25,3 +26,7 @@ for s in dao.get_salles():
     print(s.afficher_infos())
 
 print("Suppression :", dao.delete_salle("S01"))
+
+service = ServiceSalle()
+salle1 = Salle("S101", "Salle Réseau", "Laboratoire", 20)
+print(service.ajouter_salle(salle1))
