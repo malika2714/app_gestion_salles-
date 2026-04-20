@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from tkinter import messagebox
+from tkinter import ttk
 from models.salle import Salle
 from services.service_salle import ServiceSalle
 
@@ -123,3 +124,6 @@ class ViewSalle(ctk.CTk):
                 messagebox.showerror("Erreur", "Salle introuvable.")
 
         self.btn_rechercher = ctk.CTkButton(self.cadreAction, text="Rechercher", command=self.rechercher_salle)
+
+        self.cadreList = ctk.CTkFrame(self, corner_radius=10, width=400)
+        self.cadreList.pack(pady=10, padx=10, fill="both", expand=True)
