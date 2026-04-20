@@ -103,3 +103,5 @@ class ViewSalle(ctk.CTk):
                 self.vider_champs()
             else:
                 messagebox.showerror("Erreur", message)
+
+        self.btn_supprimer = ctk.CTkButton(self.cadreAction, text="Supprimer", command=self.supprimer_salle)
