@@ -121,3 +121,5 @@ class ViewSalle(ctk.CTk):
                 self.entry_capacite.insert(0, str(salle.capacite))
             else:
                 messagebox.showerror("Erreur", "Salle introuvable.")
+
+        self.btn_rechercher = ctk.CTkButton(self.cadreAction, text="Rechercher", command=self.rechercher_salle)
