@@ -59,3 +59,23 @@ class DataSalle:
             if connection.is_connected():
                 cursor.close()
                 connection.close()
+
+    def delete_salle(self, code):
+        connection = self.get_connection()
+        if connection is None:
+            return False
+
+        try:
+            cursor = connection.cursor()
+            sql = "DELETE FROM salle WHERE code=%s"
+            cursor.execute(sql, (code,))
+            connection.commit()
+            return cursor.rowcount > 0
+        except Exception as e:
+            print("Erreur delete_salle :", e)
+            return False
+        finally:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
+
