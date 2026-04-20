@@ -91,3 +91,5 @@ class ViewSalle(ctk.CTk):
                 self.vider_champs()
             else:
                 messagebox.showerror("Erreur", message)
+
+        self.btn_modifier = ctk.CTkButton(self.cadreAction, text="Modifier", command=self.modifier_salle)
