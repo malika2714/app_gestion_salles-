@@ -49,3 +49,5 @@ class ViewSalle(ctk.CTk):
         self.btn_supprimer = ctk.CTkButton(self.cadreAction, text="Supprimer")
         self.btn_supprimer.grid(row=0, column=2, padx=10, pady=10)
 
+        self.btn_rechercher = ctk.CTkButton(self.cadreAction, text="Rechercher")
+        self.btn_rechercher.grid(row=0, column=3, padx=10, pady=10)
