@@ -49,3 +49,20 @@ def modifier_salle(self, salle):
         return True, "Salle modifiée avec succès."
     return False, "Erreur lors de la modification de la salle."
 
+
+def supprimer_salle(self, code):
+    if not code:
+        return False, "Le code est obligatoire."
+
+    succes = self.dao_salle.delete_salle(code)
+    if succes:
+        return True, "Salle supprimée avec succès."
+    return False, "Salle introuvable ou erreur de suppression."
+
+def rechercher_salle(self, code):
+    if not code:
+        return None
+    return self.dao_salle.get_salle(code)
+
+def recuperer_salles(self):
+    return self.dao_salle.get_salles()
