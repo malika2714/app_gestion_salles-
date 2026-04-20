@@ -30,3 +30,11 @@ print("Suppression :", dao.delete_salle("S01"))
 service = ServiceSalle()
 salle1 = Salle("S101", "Salle Réseau", "Laboratoire", 20)
 print(service.ajouter_salle(salle1))
+
+salle1.libelle = "Salle Réseau Modifiée"
+salle1.capacite = 25
+print(service.modifier_salle(salle1))
+
+print(service.supprimer_salle("S101"))
+
+print(service.rechercher_salle("S101"))
