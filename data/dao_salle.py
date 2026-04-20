@@ -24,6 +24,7 @@ class DataSalle:
     def insert_salle(self, salle):
         connection = self.get_connection()
         if connection is None:
+            print("Connexion à la base impossible")
             return False
 
         cursor = None
@@ -33,10 +34,11 @@ class DataSalle:
             valeurs = (salle.code, salle.libelle, salle.type, salle.capacite)
             cursor.execute(sql, valeurs)
             connection.commit()
+            print("Insertion réussie")
             return True
 
         except Exception as e:
-            print("Erreur lors de l'ajout de la salle :", e)
+            print("Erreur exacte insert_salle :", e)
             return False
 
         finally:
