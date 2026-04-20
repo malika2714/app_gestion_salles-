@@ -76,3 +76,18 @@ class ViewSalle(ctk.CTk):
             messagebox.showerror("Erreur", message)
 
         self.btn_ajouter = ctk.CTkButton(self.cadreAction, text="Ajouter", command=self.ajouter_salle)
+
+        def modifier_salle(self):
+            salle = Salle(
+                self.entry_code.get(),
+                self.entry_libelle.get(),
+                self.entry_type.get(),
+                self.entry_capacite.get()
+            )
+
+            succes, message = self.service_salle.modifier_salle(salle)
+            if succes:
+                messagebox.showinfo("Succès", message)
+                self.vider_champs()
+            else:
+                messagebox.showerror("Erreur", message)
