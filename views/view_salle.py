@@ -7,3 +7,6 @@ class ViewSalle(ctk.CTk):
         super().__init__()
         self.service_salle = ServiceSalle()
 
+        self.title("Gestion des salles")
+        self.geometry("750x550")
+
