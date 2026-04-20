@@ -10,3 +10,5 @@ class ViewSalle(ctk.CTk):
         self.title("Gestion des salles")
         self.geometry("750x550")
 
+        self.cadreInfo = ctk.CTkFrame(self, corner_radius=10)
+        self.cadreInfo.pack(pady=10, padx=10, fill="x")
