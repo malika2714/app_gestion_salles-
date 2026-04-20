@@ -40,3 +40,22 @@ class DataSalle:
                 cursor.close()
                 connection.close()
 
+    def update_salle(self, salle):
+        connection = self.get_connection()
+        if connection is None:
+            return False
+
+        try:
+            cursor = connection.cursor()
+            sql = "UPDATE salle SET libelle=%s, type=%s, capacite=%s WHERE code=%s"
+            values = (salle.libelle, salle.type, salle.capacite, salle.code)
+            cursor.execute(sql, values)
+            connection.commit()
+            return cursor.rowcount > 0
+        except Exception as e:
+            print("Erreur update_salle :", e)
+            return False
+        finally:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
