@@ -6,18 +6,19 @@ from models.salle import Salle
 class DataSalle:
     def get_connection(self):
         try:
-            with open("Data/config.json", "r", encoding="utf-8") as f:
+            with open("data/config.json", "r", encoding="utf-8") as f:
                 config = json.load(f)
 
             connection = mysql.connector.connect(
                 host=config["host"],
-                user=config["root"],
-                password=config["admin"],
-                database=config["db_salles"]
+                user=config["user"],
+                password=config["password"],
+                database=config["database"]
             )
             return connection
+
         except Exception as e:
-            print("Erreur de connexion :", e)
+            print("Erreur de connexion à la base de données :", e)
             return None
 
     def insert_salle(self, salle):
@@ -25,19 +26,23 @@ class DataSalle:
         if connection is None:
             return False
 
+        cursor = None
         try:
             cursor = connection.cursor()
             sql = "INSERT INTO salle (code, libelle, type, capacite) VALUES (%s, %s, %s, %s)"
-            values = (salle.code, salle.libelle, salle.type, salle.capacite)
-            cursor.execute(sql, values)
+            valeurs = (salle.code, salle.libelle, salle.type, salle.capacite)
+            cursor.execute(sql, valeurs)
             connection.commit()
             return True
+
         except Exception as e:
-            print("Erreur insert_salle :", e)
+            print("Erreur lors de l'ajout de la salle :", e)
             return False
+
         finally:
-            if connection.is_connected():
+            if cursor is not None:
                 cursor.close()
+            if connection is not None and connection.is_connected():
                 connection.close()
 
     def update_salle(self, salle):
@@ -45,19 +50,26 @@ class DataSalle:
         if connection is None:
             return False
 
+        cursor = None
         try:
             cursor = connection.cursor()
-            sql = "UPDATE salle SET libelle=%s, type=%s, capacite=%s WHERE code=%s"
-            values = (salle.libelle, salle.type, salle.capacite, salle.code)
-            cursor.execute(sql, values)
+            sql = "UPDATE salle SET libelle = %s, type = %s, capacite = %s WHERE code = %s"
+            valeurs = (salle.libelle, salle.type, salle.capacite, salle.code)
+            cursor.execute(sql, valeurs)
             connection.commit()
-            return cursor.rowcount > 0
-        except Exception as e:
-            print("Erreur update_salle :", e)
+
+            if cursor.rowcount > 0:
+                return True
             return False
+
+        except Exception as e:
+            print("Erreur lors de la modification de la salle :", e)
+            return False
+
         finally:
-            if connection.is_connected():
+            if cursor is not None:
                 cursor.close()
+            if connection is not None and connection.is_connected():
                 connection.close()
 
     def delete_salle(self, code):
@@ -65,41 +77,51 @@ class DataSalle:
         if connection is None:
             return False
 
+        cursor = None
         try:
             cursor = connection.cursor()
-            sql = "DELETE FROM salle WHERE code=%s"
+            sql = "DELETE FROM salle WHERE code = %s"
             cursor.execute(sql, (code,))
             connection.commit()
-            return cursor.rowcount > 0
-        except Exception as e:
-            print("Erreur delete_salle :", e)
-            return False
-        finally:
-            if connection.is_connected():
-                cursor.close()
-                connection.close()
 
+            if cursor.rowcount > 0:
+                return True
+            return False
+
+        except Exception as e:
+            print("Erreur lors de la suppression de la salle :", e)
+            return False
+
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connection is not None and connection.is_connected():
+                connection.close()
 
     def get_salle(self, code):
         connection = self.get_connection()
         if connection is None:
             return None
 
+        cursor = None
         try:
             cursor = connection.cursor()
-            sql = "SELECT code, libelle, type, capacite FROM salle WHERE code=%s"
+            sql = "SELECT code, libelle, type, capacite FROM salle WHERE code = %s"
             cursor.execute(sql, (code,))
-            row = cursor.fetchone()
+            resultat = cursor.fetchone()
 
-            if row:
-                return Salle(row[0], row[1], row[2], row[3])
+            if resultat:
+                return Salle(resultat[0], resultat[1], resultat[2], resultat[3])
             return None
+
         except Exception as e:
-            print("Erreur get_salle :", e)
+            print("Erreur lors de la recherche de la salle :", e)
             return None
+
         finally:
-            if connection.is_connected():
+            if cursor is not None:
                 cursor.close()
+            if connection is not None and connection.is_connected():
                 connection.close()
 
     def get_salles(self):
@@ -107,20 +129,26 @@ class DataSalle:
         if connection is None:
             return []
 
+        cursor = None
         try:
             cursor = connection.cursor()
             sql = "SELECT code, libelle, type, capacite FROM salle"
             cursor.execute(sql)
-            rows = cursor.fetchall()
+            resultats = cursor.fetchall()
 
-            salles = []
-            for row in rows:
-                salles.append(Salle(row[0], row[1], row[2], row[3]))
-            return salles
+            liste_salles = []
+            for row in resultats:
+                salle = Salle(row[0], row[1], row[2], row[3])
+                liste_salles.append(salle)
+
+            return liste_salles
+
         except Exception as e:
-            print("Erreur get_salles :", e)
+            print("Erreur lors de la récupération des salles :", e)
             return []
+
         finally:
-            if connection.is_connected():
+            if cursor is not None:
                 cursor.close()
+            if connection is not None and connection.is_connected():
                 connection.close()
