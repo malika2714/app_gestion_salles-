@@ -101,3 +101,26 @@ class DataSalle:
             if connection.is_connected():
                 cursor.close()
                 connection.close()
+
+    def get_salles(self):
+        connection = self.get_connection()
+        if connection is None:
+            return []
+
+        try:
+            cursor = connection.cursor()
+            sql = "SELECT code, libelle, type, capacite FROM salle"
+            cursor.execute(sql)
+            rows = cursor.fetchall()
+
+            salles = []
+            for row in rows:
+                salles.append(Salle(row[0], row[1], row[2], row[3]))
+            return salles
+        except Exception as e:
+            print("Erreur get_salles :", e)
+            return []
+        finally:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
